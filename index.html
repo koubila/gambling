@@ -2,9 +2,9 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="description" content="Découvrez les 12 jeux emblématiques du manga Gambling School (Kakegurui) à travers une présentation visuelle et détaillée. Un site responsive dédié aux amateurs de stratégie, de bluff et de hasard.">
   <title>Jeux de Gambling School</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Découvrez les 12 jeux emblématiques du manga Gambling School (Kakegurui) à travers une présentation visuelle et détaillée. Un site responsive dédié aux amateurs de stratégie, de bluff et de hasard." />
   <style>
     * {
       box-sizing: border-box;
@@ -15,6 +15,9 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: linear-gradient(to right, #0f0f0f, #1c0000);
       color: white;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
     header {
@@ -24,13 +27,49 @@
       font-size: 2em;
       font-weight: bold;
       text-shadow: 2px 2px 5px black;
+      flex-shrink: 0;
+    }
+
+    section.presentation {
+      padding: 20px;
+      background-color: #1a0000;
+      text-align: center;
+      line-height: 1.6;
+      flex-shrink: 0;
+    }
+
+    section.presentation h2 {
+      color: #ff4444;
+      margin-bottom: 15px;
+    }
+
+    section.presentation p {
+      max-width: 800px;
+      margin: auto;
+      font-size: 1em;
+    }
+
+    .filter-container {
+      margin: 20px auto;
+      max-width: 800px;
+      text-align: center;
+    }
+
+    .filter-container label {
+      margin-right: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      user-select: none;
     }
 
     .container {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 20px;
-      padding: 20px;
+      padding: 0 20px 40px 20px;
+      flex-grow: 1;
+      max-width: 1200px;
+      margin: 0 auto;
     }
 
     .card {
@@ -42,6 +81,7 @@
       transition: transform 0.3s, box-shadow 0.3s;
       display: flex;
       flex-direction: column;
+      position: relative;
     }
 
     .card:hover {
@@ -53,6 +93,7 @@
       width: 100%;
       height: 180px;
       object-fit: cover;
+      border-bottom: 2px solid #a00000;
     }
 
     .card-body {
@@ -72,6 +113,36 @@
       font-size: 0.95em;
       line-height: 1.4;
       flex-grow: 1;
+      margin-bottom: 10px;
+    }
+
+    .card-type {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: #a00000cc;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-size: 0.8em;
+      font-weight: bold;
+      color: #fff;
+      text-transform: uppercase;
+      box-shadow: 0 0 5px black;
+    }
+
+    .video-link {
+      text-align: right;
+      margin-top: auto;
+    }
+
+    .video-link a {
+      color: #ff6666;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .video-link a:hover {
+      text-decoration: underline;
     }
 
     footer {
@@ -80,6 +151,7 @@
       background-color: #1c0000;
       font-size: 0.9em;
       color: #bbb;
+      flex-shrink: 0;
     }
 
     @media (max-width: 600px) {
@@ -93,15 +165,22 @@
   <header>
     🎲 Jeux de Gambling School 🎴
   </header>
-  <section style="padding: 20px; background-color: #1a0000; text-align: center; line-height: 1.6;">
-  <h2 style="color: #ff4444;">Bienvenue sur notre page dédiée à Gambling School</h2>
-  <p style="max-width: 800px; margin: auto; font-size: 1em;">
-    Ce site présente les <strong>12 jeux de hasard et de stratégie</strong> les plus emblématiques du manga <em>Gambling School</em> (Kakegurui). 
-    Plongez dans un univers de bluff, de psychologie et de mises risquées, à travers des résumés illustrés de chaque jeu.
-    Conçu pour être responsive et facile à naviguer, ce site est idéal pour les fans du manga, les curieux, ou les amateurs de jeux mentaux. 🎲
-  </p>
-</section>
 
+  <section class="presentation">
+    <h2>Bienvenue sur notre page dédiée à Gambling School</h2>
+    <p>
+      Ce site présente les <strong>12 jeux de hasard, de stratégie et de bluff</strong> les plus emblématiques du manga <em>Gambling School</em> (Kakegurui). 
+      Plongez dans un univers de bluff, de psychologie et de mises risquées, à travers des résumés illustrés de chaque jeu.
+      Conçu pour être responsive et facile à naviguer, ce site est idéal pour les fans du manga, les curieux, ou les amateurs de jeux mentaux. 🎲
+    </p>
+  </section>
+
+  <div class="filter-container" aria-label="Filtrer les jeux par type">
+    <label><input type="radio" name="filter" value="all" checked> Tous</label>
+    <label><input type="radio" name="filter" value="hasard"> Hasard</label>
+    <label><input type="radio" name="filter" value="strategie"> Stratégie</label>
+    <label><input type="radio" name="filter" value="bluff"> Bluff</label>
+  </div>
 
   <div class="container" id="gameCards"></div>
 
@@ -114,78 +193,125 @@
       {
         title: "Pierre-Feuille-Ciseaux par Bulletin",
         image: "https://i.imgur.com/vXNR2Fh.jpg",
-        description: "Chaque joueur pioche trois cartes dans une boîte, et joue une carte à la fois jusqu’à ce qu’un gagnant soit désigné."
+        description: "Un jeu inspiré de Pierre-Feuille-Ciseaux, mais avec des cartes tirées aléatoirement par bulletin. Chaque joueur tire trois cartes depuis une urne contenant un nombre limité de chaque symbole. Il faut ensuite bluffer et planifier ses coups, car la distribution des cartes est publique, ce qui introduit une composante stratégique très forte.",
+        type: "strategie",
+        video: "https://www.youtube.com/watch?v=Q6lgQ0WfhU4"
       },
       {
         title: "Double Mémoire",
         image: "https://i.imgur.com/rlvQ7YM.jpg",
-        description: "Similaire au Memory, joué avec deux jeux de cartes. L'objectif est de retrouver les paires."
+        description: "Deux jeux de cartes sont mélangés pour créer une surface de 104 cartes. À tour de rôle, les joueurs retournent deux cartes pour trouver des paires. Mais attention : les cartes sont numérotées et classées, ce qui ajoute une dimension de mémorisation et de calcul, car les paires peuvent rapporter plus ou moins selon leur valeur.",
+        type: "strategie",
+        video: "https://www.youtube.com/watch?v=9sRs6O7e2b0"
       },
       {
         title: "Vie ou Mort",
         image: "https://i.imgur.com/F6RraLA.jpg",
-        description: "Pari sur la case où tomberont les lames. Une lame vers le haut rapporte 30x la mise, sinon 30x de perte."
+        description: "Un jeu de hasard extrême où les joueurs parient sur le résultat d’un piège mécanique composé de lames cachées. Si une lame se dresse vers le haut au moment de l’activation, le joueur remporte 30 fois sa mise. Sinon, il la perd. C’est un test de prise de risque pur, avec une tension dramatique constante.",
+        type: "hasard",
+        video: "https://www.youtube.com/watch?v=QxrZ5SRRVwE"
       },
       {
         title: "Échange de Dettes",
         image: "https://i.imgur.com/GHezFqx.jpg",
-        description: "Poker indien à 2 cartes joué pour échanger ou annuler des dettes entre 4 joueurs."
+        description: "Un poker indien revisité où chaque joueur porte une carte sur son front, visible des autres mais pas de lui-même. Le but est d’échanger des dettes entre quatre joueurs. Il faut deviner sa propre carte à partir des réactions des autres, gérer ses dettes, et faire preuve d’un grand sens de la psychologie et du bluff.",
+        type: "bluff",
+        video: "https://www.youtube.com/watch?v=2B9XG2hDwrs"
       },
       {
         title: "Tarots du Destin",
         image: "https://i.imgur.com/N3AIrlM.jpg",
-        description: "Les cartes de tarot rapportent ou font perdre des points selon leur orientation. Le Fou peut tout changer."
+        description: "Chaque joueur tire une carte de tarot inversée ou non. Certaines cartes font gagner des points, d'autres en font perdre. La carte du 'Fou' peut bouleverser tout le jeu. L’aléatoire est présent, mais la stratégie repose sur les paris anticipés et l’analyse de la probabilité des cartes restantes.",
+        type: "strategie",
+        video: "https://www.youtube.com/watch?v=u5mu9T4rT-8"
       },
       {
         title: "Guillotine Coupe-Doigt",
         image: "https://i.imgur.com/XHE4eiZ.jpg",
-        description: "Jeu de 'chicken' avec une guillotine. Coupez une corde à votre tour... et espérez survivre !"
+        description: "Un jeu de 'chicken' dans lequel les joueurs tirent des cordes reliées à une guillotine. Une seule corde active la lame. À chaque tour, les joueurs doivent choisir s’ils coupent une corde ou se retirent. C’est un jeu de nerfs, de psychologie, et de stratégie de fuite ou d’engagement face au danger.",
+        type: "bluff",
+        video: "https://www.youtube.com/watch?v=M_u4nCGR-HQ"
       },
       {
         title: "Nym Type Zéro",
         image: "https://i.imgur.com/DAzqZr8.jpg",
-        description: "Jeu en 3 manches avec des cartes de 0 à 3. Si la somme dépasse 9, le joueur est éliminé. Chaque jeton est un vote."
+        description: "Chaque joueur possède une main de cartes numérotées de 0 à 3. À chaque manche, les joueurs choisissent une carte à jouer. Si la somme totale dépasse 9, le joueur qui a joué la carte la plus élevée est éliminé. En parallèle, chaque jeton misé représente un vote dans une élection, introduisant un enjeu politique à la partie.",
+        type: "strategie",
+        video: "https://www.youtube.com/watch?v=4aIbwv_yQ2Y"
       },
       {
         title: "Macaron de la Mort",
         image: "https://i.imgur.com/hMYlLU2.jpg",
-        description: "Parmi trois macarons, un contient du piment extrême. Les équipes doivent cacher leurs réactions et deviner l’adversaire."
+        description: "Trois macarons sont proposés : l’un contient du piment ultra-fort. Chaque membre d'une équipe en mange un et doit cacher sa réaction. Ensuite, l’équipe adverse tente de deviner qui a mangé le macaron piégé. C’est un test de contrôle de soi, de mensonge, et d’analyse du langage corporel.",
+        type: "bluff",
+        video: "https://www.youtube.com/watch?v=5Wy6YFMIA6o"
       },
       {
         title: "Soixante-Trois",
         image: "https://i.imgur.com/m4DhgRU.jpg",
-        description: "Jeu de bluff avec un paquet de 52 cartes. Si le total dépasse 63, le dernier joueur perd, sinon il gagne."
+        description: "Chaque joueur joue une carte d’un jeu standard, en espérant que la somme cumulée des cartes jouées n’excède pas 63. Si un joueur fait dépasser cette limite, il perd. Il s'agit d’un jeu de mémoire, de probabilités, et de bluff, où chaque carte doit être choisie avec soin en fonction de ce qui a déjà été joué.",
+        type: "strategie",
+        video: "https://www.youtube.com/watch?v=ORHhcxZMIYs"
       },
       {
         title: "Jeu du Bien Commun",
         image: "https://i.imgur.com/ujtGRe6.jpg",
-        description: "Jeu stratégique à 5 joueurs. Les pièces dans la boîte commune sont doublées, celles dans la boîte perso comptent seules."
+        description: "Les joueurs reçoivent un nombre égal de pièces. À chaque tour, ils peuvent en mettre dans une boîte commune (multipliées par deux) ou les garder. À la fin, celui qui a misé le moins dans la boîte commune est disqualifié. Il faut donc coopérer... sans se faire dépasser. C’est une allégorie brillante du dilemme du prisonnier.",
+        type: "strategie",
+        video: "https://www.youtube.com/watch?v=EcKkl4iOQJs"
       },
       {
         title: "Tour des Portes",
         image: "https://i.imgur.com/nVnYlZd.jpg",
-        description: "Course entre les étages pour rapporter un lys blanc. Des énigmes numériques bloquent les portes à chaque niveau."
+        description: "Un jeu d’endurance intellectuelle : chaque joueur doit franchir des portes en résolvant des énigmes ou puzzles numériques. À chaque étage, la difficulté augmente. Le but est de récupérer un lys blanc au sommet et revenir avant les autres. Le jeu repose sur la logique, la rapidité et la mémoire.",
+        type: "strategie",
+        video: "https://www.youtube.com/watch?v=Qipw6XvFGFw"
       },
       {
         title: "Enchères aux 100 Votes",
         image: "https://i.imgur.com/5L2q9tE.jpg",
-        description: "Les joueurs misent des votes pour gagner 100 votes. L’enchérisseur perd les votes misés. Tout est anonyme, même l’organisateur."
+        description: "Les joueurs misent un nombre secret de votes pour tenter de remporter une mise de 100 votes. L’enchérisseur le plus haut gagne, mais perd tous les votes misés. Personne ne connaît les autres mises, ni l’organisateur. Cela crée un jeu de bluff profond, où le silence est l’arme la plus redoutable.",
+        type: "bluff",
+        video: "https://www.youtube.com/watch?v=45axqthz3Ig"
       }
     ];
 
     const container = document.getElementById("gameCards");
 
-    games.forEach(game => {
+    function createCard(game) {
       const card = document.createElement("div");
       card.className = "card";
+      card.dataset.type = game.type;
+
       card.innerHTML = `
         <img src="${game.image}" alt="${game.title}">
+        <div class="card-type">${game.type}</div>
         <div class="card-body">
           <div class="card-title">${game.title}</div>
           <div class="card-text">${game.description}</div>
+          <div class="video-link"><a href="${game.video}" target="_blank" rel="noopener noreferrer" aria-label="Voir la vidéo explicative pour ${game.title}">🎥 Vidéo explicative</a></div>
         </div>
       `;
-      container.appendChild(card);
+      return card;
+    }
+
+    function displayGames(filter = "all") {
+      container.innerHTML = "";
+      const filtered = filter === "all" ? games : games.filter(game => game.type === filter);
+      filtered.forEach(game => {
+        container.appendChild(createCard(game));
+      });
+    }
+
+    // Initial display
+    displayGames();
+
+    // Filter controls
+    const filters = document.querySelectorAll('input[name="filter"]');
+    filters.forEach(input => {
+      input.addEventListener("change", () => {
+        displayGames(input.value);
+      });
     });
   </script>
 </body>
