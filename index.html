@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Jeux de Gambling School</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #0f0f0f, #1c0000);
+      color: white;
+    }
+
+    header {
+      background-color: #a00000;
+      padding: 20px;
+      text-align: center;
+      font-size: 2em;
+      font-weight: bold;
+      text-shadow: 2px 2px 5px black;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .card {
+      background-color: #2c0000;
+      border: 2px solid #a00000;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 10px #ff0000;
+      transition: transform 0.3s, box-shadow 0.3s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 20px #ff3333;
+    }
+
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .card-body {
+      padding: 15px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-title {
+      font-size: 1.2em;
+      color: #ff4444;
+      margin-bottom: 10px;
+    }
+
+    .card-text {
+      font-size: 0.95em;
+      line-height: 1.4;
+      flex-grow: 1;
+    }
+
+    footer {
+      text-align: center;
+      padding: 10px;
+      background-color: #1c0000;
+      font-size: 0.9em;
+      color: #bbb;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        font-size: 1.4em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    🎲 Jeux de Gambling School 🎴
+  </header>
+
+  <div class="container" id="gameCards"></div>
+
+  <footer>
+    © 2025 - Présentation des jeux issus du manga Gambling School
+  </footer>
+
+  <script>
+    const games = [
+      {
+        title: "Pierre-Feuille-Ciseaux par Bulletin",
+        image: "https://i.imgur.com/vXNR2Fh.jpg",
+        description: "Chaque joueur pioche trois cartes dans une boîte, et joue une carte à la fois jusqu’à ce qu’un gagnant soit désigné."
+      },
+      {
+        title: "Double Mémoire",
+        image: "https://i.imgur.com/rlvQ7YM.jpg",
+        description: "Similaire au Memory, joué avec deux jeux de cartes. L'objectif est de retrouver les paires."
+      },
+      {
+        title: "Vie ou Mort",
+        image: "https://i.imgur.com/F6RraLA.jpg",
+        description: "Pari sur la case où tomberont les lames. Une lame vers le haut rapporte 30x la mise, sinon 30x de perte."
+      },
+      {
+        title: "Échange de Dettes",
+        image: "https://i.imgur.com/GHezFqx.jpg",
+        description: "Poker indien à 2 cartes joué pour échanger ou annuler des dettes entre 4 joueurs."
+      },
+      {
+        title: "Tarots du Destin",
+        image: "https://i.imgur.com/N3AIrlM.jpg",
+        description: "Les cartes de tarot rapportent ou font perdre des points selon leur orientation. Le Fou peut tout changer."
+      },
+      {
+        title: "Guillotine Coupe-Doigt",
+        image: "https://i.imgur.com/XHE4eiZ.jpg",
+        description: "Jeu de 'chicken' avec une guillotine. Coupez une corde à votre tour... et espérez survivre !"
+      },
+      {
+        title: "Nym Type Zéro",
+        image: "https://i.imgur.com/DAzqZr8.jpg",
+        description: "Jeu en 3 manches avec des cartes de 0 à 3. Si la somme dépasse 9, le joueur est éliminé. Chaque jeton est un vote."
+      },
+      {
+        title: "Macaron de la Mort",
+        image: "https://i.imgur.com/hMYlLU2.jpg",
+        description: "Parmi trois macarons, un contient du piment extrême. Les équipes doivent cacher leurs réactions et deviner l’adversaire."
+      },
+      {
+        title: "Soixante-Trois",
+        image: "https://i.imgur.com/m4DhgRU.jpg",
+        description: "Jeu de bluff avec un paquet de 52 cartes. Si le total dépasse 63, le dernier joueur perd, sinon il gagne."
+      },
+      {
+        title: "Jeu du Bien Commun",
+        image: "https://i.imgur.com/ujtGRe6.jpg",
+        description: "Jeu stratégique à 5 joueurs. Les pièces dans la boîte commune sont doublées, celles dans la boîte perso comptent seules."
+      },
+      {
+        title: "Tour des Portes",
+        image: "https://i.imgur.com/nVnYlZd.jpg",
+        description: "Course entre les étages pour rapporter un lys blanc. Des énigmes numériques bloquent les portes à chaque niveau."
+      },
+      {
+        title: "Enchères aux 100 Votes",
+        image: "https://i.imgur.com/5L2q9tE.jpg",
+        description: "Les joueurs misent des votes pour gagner 100 votes. L’enchérisseur perd les votes misés. Tout est anonyme, même l’organisateur."
+      }
+    ];
+
+    const container = document.getElementById("gameCards");
+
+    games.forEach(game => {
+      const card = document.createElement("div");
+      card.className = "card";
+      card.innerHTML = `
+        <img src="${game.image}" alt="${game.title}">
+        <div class="card-body">
+          <div class="card-title">${game.title}</div>
+          <div class="card-text">${game.description}</div>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+  </script>
+</body>
+</html>
